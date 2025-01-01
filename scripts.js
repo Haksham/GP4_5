@@ -126,3 +126,65 @@ function addMember() {
   alert('Add Member functionality to be implemented');
 }
 
+
+function searchBooks() {
+  const input = document.getElementById('searchBook');
+  const filter = input.value.toLowerCase();
+  const table = document.querySelector('#books tbody');
+  const rows = table.getElementsByTagName('tr');
+
+  for (let i = 0; i < rows.length; i++) {
+      const title = rows[i].getElementsByTagName('td')[1].innerText.toLowerCase();
+      if (title.includes(filter)) {
+          rows[i].style.display = '';
+      } else {
+          rows[i].style.display = 'none';
+      }
+  }
+}
+
+function addMember() {
+  const name = prompt('Enter member name:');
+  const email = prompt('Enter member email:');
+  const membershipDate = prompt('Enter membership date (YYYY-MM-DD):');
+
+  if (name && email && membershipDate) {
+      const member = { name, email, membershipDate };
+      addMemberToTable(member);
+  }
+}
+
+function addMemberToTable(member) {
+  const table = document.querySelector('#members tbody');
+  const row = document.createElement('tr');
+
+  row.innerHTML = `
+      <td>${member.name}</td>
+      <td>${member.email}</td>
+      <td>${member.membershipDate}</td>
+      <td>
+          <button onclick="editMember(this)">Edit</button>
+          <button onclick="deleteMember(this)">Delete</button>
+      </td>
+  `;
+
+  table.appendChild(row);
+}
+
+function editMember(button) {
+  const row = button.parentElement.parentElement;
+  const name = prompt('Edit member name:', row.cells[0].innerText);
+  const email = prompt('Edit member email:', row.cells[1].innerText);
+  const membershipDate = prompt('Edit membership date (YYYY-MM-DD):', row.cells[2].innerText);
+
+  if (name && email && membershipDate) {
+      row.cells[0].innerText = name;
+      row.cells[1].innerText = email;
+      row.cells[2].innerText = membershipDate;
+  }
+}
+
+function deleteMember(button) {
+  const row = button.parentElement.parentElement;
+  row.remove();
+}

@@ -20,6 +20,7 @@
     <main>
         <section id="books">
             <h2>Books</h2>
+            <input type="text" id="searchBook" placeholder="Search for books..." onkeyup="searchBooks()">
             <button onclick="addBook()">Add Book</button>
             <table>
                 <thead>
@@ -32,9 +33,24 @@
                     </tr>
                 </thead>
                 <tbody>
-                    
+                    <!-- Book entries will go here -->
+                </tbody>
+            </table>
+        </section>
+        <section id="members">
+            <h2>Members</h2>
+            <button onclick="addMember()">Add Member</button>
+            <table>
+                <thead>
+                    <tr>
+                        <th>Name</th>
+                        <th>Email</th>
+                        <th>Membership Date</th>
+                        <th>Actions</th>
+                    </tr>
                 </thead>
                 <tbody>
+                    <!-- Member entries will go here -->
                 </tbody>
             </table>
         </section>
@@ -52,7 +68,7 @@
                     </tr>
                 </thead>
                 <tbody>
-                    
+                    <!-- Transaction entries will go here -->
                 </tbody>
             </table>
         </section>
