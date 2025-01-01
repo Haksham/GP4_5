@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Library Management System</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <header>
+        <h1>Library Management System</h1>
+    </header>
+    <nav>
+        <ul>
+            <li><a href="#books">Books</a></li>
+            <li><a href="#members">Members</a></li>
+            <li><a href="#transactions">Transactions</a></li>
+        </ul>
+    </nav>
+    <main>
+        <section id="books">
+            <h2>Books</h2>
+            <button onclick="addBook()">Add Book</button>
+            <table>
+                <thead>
+                    <tr>
+                        <th>Title</th>
+                        <th>Author</th>
+                        <th>Genre</th>
+                        <th>Actions</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <!-- Book entries will go here -->
+                </tbody>
+            </table>
+        </section>
+        <section id="members">
+            <h2>Members</h2>
+            <button onclick="addMember()">Add Member</button>
+            <table>
+                <thead>
+                    <tr>
+                        <th>Name</th>
+                        <th>Email</th>
+                        <th>Membership Date</th>
+                        <th>Actions</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <!-- Member entries will go here -->
+                </tbody>
+            </table>
+        </section>
+        <section id="transactions">
+            <h2>Transactions</h2>
+            <button onclick="addTransaction()">Add Transaction</button>
+            <table>
+                <thead>
+                    <tr>
+                        <th>Book</th>
+                        <th>Member</th>
+                        <th>Date Borrowed</th>
+                        <th>Date Returned</th>
+                        <th>Actions</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <!-- Transaction entries will go here -->
+                </tbody>
+            </table>
+        </section>
+    </main>
+    <footer>
+        <p>&copy; 2023 Library Management System</p>
+    </footer>
+    <script src="scripts.js"></script>
+</body>
+</html>
