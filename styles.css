@@ -23,6 +23,7 @@ nav {
 nav ul {
   list-style: none;
   padding: 0;
+  margin: 0;
 }
 
 nav ul li {
@@ -79,4 +80,37 @@ footer {
   width: 100%;
   bottom: 0;
   z-index: 1000; 
+}
+
+/* Responsive styles */
+@media (max-width: 768px) {
+  nav ul li {
+    display: block;
+    margin: 5px 0;
+  }
+
+  table, th, td {
+    display: block;
+    width: 100%;
+  }
+
+  th, td {
+    text-align: right;
+    padding-left: 50%;
+    position: relative;
+  }
+
+  th::before, td::before {
+    content: attr(data-label);
+    position: absolute;
+    left: 0;
+    width: 50%;
+    padding-left: 10px;
+    font-weight: bold;
+    text-align: left;
+  }
+
+  th, td {
+    padding: 10px 5px;
+  }
 }
