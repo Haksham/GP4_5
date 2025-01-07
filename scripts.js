@@ -1,75 +1,5 @@
-// Function to calculate late fee
-function calculateLateFee(dateBorrowed, dateReturned) {
-  const borrowedDate = new Date(dateBorrowed);
-  const returnedDate = new Date(dateReturned);
-
-  // Calculate the difference in months between the two dates
-  const monthsOverdue = Math.max(0, (returnedDate.getFullYear() - borrowedDate.getFullYear()) * 12 + returnedDate.getMonth() - borrowedDate.getMonth());
-
-  // Calculate the late fee (5 rupees per month)
-  return monthsOverdue * 5;
-}
-
-// Example of applying it in a transaction
-function addTransaction() {
-  const book = prompt('Enter book title:');
-  const member = prompt('Enter member name:');
-  const dateBorrowed = prompt('Enter date borrowed (YYYY-MM-DD):');
-  const dateReturned = prompt('Enter date returned (YYYY-MM-DD):');
-
-  if (book && member && dateBorrowed && dateReturned) {
-    const lateFee = calculateLateFee(dateBorrowed, dateReturned);
-    const transaction = { book, member, dateBorrowed, dateReturned, lateFee };
-    addTransactionToTable(transaction);
-  }
-}
-
-function addTransactionToTable(transaction) {
-  const table = document.querySelector('#transactions tbody');
-  const row = document.createElement('tr');
-
-  row.innerHTML = `
-      <td>${transaction.book}</td>
-      <td>${transaction.member}</td>
-      <td>${transaction.dateBorrowed}</td>
-      <td>${transaction.dateReturned}</td>
-      <td>${transaction.lateFee} rupees</td>
-      <td>
-          <button onclick="editTransaction(this)">Edit</button>
-          <button onclick="deleteTransaction(this)">Delete</button>
-      </td>
-  `;
-
-  table.appendChild(row);
-}
-
-// Edit transaction function (if needed)
-function editTransaction(button) {
-  const row = button.parentElement.parentElement;
-  const book = prompt('Edit book title:', row.cells[0].innerText);
-  const member = prompt('Edit member name:', row.cells[1].innerText);
-  const dateBorrowed = prompt('Edit date borrowed (YYYY-MM-DD):', row.cells[2].innerText);
-  const dateReturned = prompt('Edit date returned (YYYY-MM-DD):', row.cells[3].innerText);
-
-  if (book && member && dateBorrowed && dateReturned) {
-      row.cells[0].innerText = book;
-      row.cells[1].innerText = member;
-      row.cells[2].innerText = dateBorrowed;
-      row.cells[3].innerText = dateReturned;
-      const lateFee = calculateLateFee(dateBorrowed, dateReturned);
-      row.cells[4].innerText = `${lateFee} rupees`;
-  }
-}
-
-// Delete transaction function
-function deleteTransaction(button) {
-  const row = button.parentElement.parentElement;
-  row.remove();
-}
-
 document.addEventListener('DOMContentLoaded', () => {
   loadSampleBooks();
-  loadSampleTransactions();
 });
 
 function loadSampleBooks() {
@@ -142,6 +72,87 @@ function deleteBook(button) {
   row.remove();
 }
 
+function addTransaction() {
+  const book = prompt('Enter book title:');
+  const member = prompt('Enter member name:');
+  const dateBorrowed = prompt('Enter date borrowed (YYYY-MM-DD):');
+  const dateReturned = prompt('Enter date returned (YYYY-MM-DD):');
+
+  if (book && member && dateBorrowed && dateReturned) {
+      const lateFee = calculateLateFee(dateBorrowed, dateReturned);
+      showLateFeeWarning(lateFee);
+      const transaction = { book, member, dateBorrowed, dateReturned, lateFee };
+      addTransactionToTable(transaction);
+  }
+}
+
+function showLateFeeWarning(lateFee) {
+  const message = `They owe ${lateFee} fees`;
+  document.getElementById('late-fee-message').innerText = message;
+  document.getElementById('late-fee-popup').style.display = 'flex'; // Show popup
+}
+
+function closePopup() {
+  document.getElementById('late-fee-popup').style.display = 'none'; // Hide popup
+}
+
+
+function addTransactionToTable(transaction) {
+  const table = document.querySelector('#transactions tbody');
+  const row = document.createElement('tr');
+
+  row.innerHTML = 
+      `<td>${transaction.book}</td>
+      <td>${transaction.member}</td>
+      <td>${transaction.dateBorrowed}</td>
+      <td>${transaction.dateReturned}</td>
+      <td>${transaction.lateFee} Rupees</td> <!-- Added Late Fee -->
+      <td>
+          <button onclick="editTransaction(this)">Edit</button>
+          <button onclick="deleteTransaction(this)">Delete</button>
+      </td>`;
+  
+  table.appendChild(row);
+}
+function calculateLateFee(dateBorrowed, dateReturned) {
+  const borrowedDate = new Date(dateBorrowed);
+  const returnedDate = new Date(dateReturned);
+  
+  // Calculate difference in months
+  const diffTime = Math.abs(returnedDate - borrowedDate);
+  const diffMonths = Math.floor(diffTime / (1000 * 60 * 60 * 24 * 30)); // Approximate month difference
+
+  const lateFee = diffMonths * 5; // 5 rupees per month
+  return lateFee;
+}
+
+
+
+function editTransaction(button) {
+  const row = button.parentElement.parentElement;
+  const book = prompt('Edit book title:', row.cells[0].innerText);
+  const member = prompt('Edit member name:', row.cells[1].innerText);
+  const dateBorrowed = prompt('Edit date borrowed (YYYY-MM-DD):', row.cells[2].innerText);
+  const dateReturned = prompt('Edit date returned (YYYY-MM-DD):', row.cells[3].innerText);
+
+  if (book && member && dateBorrowed && dateReturned) {
+      row.cells[0].innerText = book;
+      row.cells[1].innerText = member;
+      row.cells[2].innerText = dateBorrowed;
+      row.cells[3].innerText = dateReturned;
+  }
+}
+
+function deleteTransaction(button) {
+  const row = button.parentElement.parentElement;
+  row.remove();
+}
+
+function addMember() {
+  alert('Add Member functionality to be implemented');
+}
+
+
 function searchBooks() {
   const input = document.getElementById('searchBook');
   const filter = input.value.toLowerCase();
@@ -156,4 +167,50 @@ function searchBooks() {
           rows[i].style.display = 'none';
       }
   }
+}
+
+function addMember() {
+  const name = prompt('Enter member name:');
+  const email = prompt('Enter member email:');
+  const membershipDate = prompt('Enter membership date (YYYY-MM-DD):');
+
+  if (name && email && membershipDate) {
+      const member = { name, email, membershipDate };
+      addMemberToTable(member);
+  }
+}
+
+function addMemberToTable(member) {
+  const table = document.querySelector('#members tbody');
+  const row = document.createElement('tr');
+
+  row.innerHTML = `
+      <td>${member.name}</td>
+      <td>${member.email}</td>
+      <td>${member.membershipDate}</td>
+      <td>
+          <button onclick="editMember(this)">Edit</button>
+          <button onclick="deleteMember(this)">Delete</button>
+      </td>
+  `;
+
+  table.appendChild(row);
+}
+
+function editMember(button) {
+  const row = button.parentElement.parentElement;
+  const name = prompt('Edit member name:', row.cells[0].innerText);
+  const email = prompt('Edit member email:', row.cells[1].innerText);
+  const membershipDate = prompt('Edit membership date (YYYY-MM-DD):', row.cells[2].innerText);
+
+  if (name && email && membershipDate) {
+      row.cells[0].innerText = name;
+      row.cells[1].innerText = email;
+      row.cells[2].innerText = membershipDate;
+  }
+}
+
+function deleteMember(button) {
+  const row = button.parentElement.parentElement;
+  row.remove();
 }
