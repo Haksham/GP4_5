@@ -55,6 +55,13 @@
         <section id="transactions">
             <h2>Transactions</h2>
             <button onclick="addTransaction()">Add Transaction</button>
+            <!-- Late Fee Popup Box -->
+            <div id="late-fee-popup" style="display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background-color: rgba(0, 0, 0, 0.5); justify-content: center; align-items: center; z-index: 1000;">
+                <div style="background-color: white; padding: 20px; border-radius: 5px; text-align: center;">
+                    <h3 id="late-fee-message">They owe _ fees</h3>
+                    <button onclick="closePopup()">Close</button>
+                </div>
+            </div>
             <table>
                 <thead>
                     <tr>
@@ -62,12 +69,12 @@
                         <th>Member</th>
                         <th>Date Borrowed</th>
                         <th>Date Returned</th>
-                        <th>Late Fee</th>
+                        <th>Late Fee</th> <!-- Added Late Fee column -->
                         <th>Actions</th>
                     </tr>
                 </thead>
                 <tbody>
-              </tbody>
+                </tbody>
             </table>
         </section>
     </main>
