@@ -23,8 +23,8 @@ Directory structure:
             └── custom.md
 ```
 ## Contributers:
-<kbd>Member 1:</kbd>[Harshvardhan Mehta](https://github.com/Haksham)
-<kbd>Member 2:</kbd>[]()
-<kbd>Member 3:</kbd>[]()
-<kbd>Member 4:</kbd>[]()
-<kbd>Member 5:</kbd>[]()
+<kbd>Member 1:</kbd>[Harshvardhan Mehta](https://github.com/Haksham)<br>
+<kbd>Member 2:</kbd>[]()<br>
+<kbd>Member 3:</kbd>[]()<br>
+<kbd>Member 4:</kbd>[]()<br>
+<kbd>Member 5:</kbd>[]()<br>
