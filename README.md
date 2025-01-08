@@ -1,4 +1,5 @@
 # By: GP5_6
+
 Group project for GitHub class.<br>
 Implement a library management system.<br>
 
@@ -22,9 +23,11 @@ Directory structure:
             ├── bug_report.md
             └── custom.md
 ```
+
 ## Contributers:
+
 <kbd>Member 1:</kbd>[Harshvardhan Mehta](https://github.com/Haksham)<br>
-<kbd>Member 2:</kbd>[]()<br>
-<kbd>Member 3:</kbd>[]()<br>
-<kbd>Member 4:</kbd>[]()<br>
-<kbd>Member 5:</kbd>[]()<br>
+<kbd>Member 2:</kbd>[Chandan H K](https://github.com/chandanhk304)<br>
+<kbd>Member 3:</kbd>[Deepak B P](https://github.com/bpdeepak)<br>
+<kbd>Member 4:</kbd>[Joann Joseph](https://github.com/joannjoseph23)<br>
+<kbd>Member 5:</kbd>[Mangesh Nesarikar](https://github.com/xxMangeshxx)<br>
