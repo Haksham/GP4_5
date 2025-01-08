@@ -5,6 +5,7 @@ document.addEventListener('DOMContentLoaded', () => {
   loadBooks();
   loadMembers();
   loadTransactions();
+  applyDarkMode();
 });
 
 function loadSampleBooks() {
@@ -219,4 +220,20 @@ function redirectToAddTransaction() {
 
 function redirectToEditTransaction() {
   window.location.href = 'edit-transaction.html';
+}
+
+function toggleDarkMode() {
+  document.body.classList.toggle('dark-mode');
+  localStorage.setItem('darkMode', document.body.classList.contains('dark-mode'));
+}
+
+function applyDarkMode() {
+  const darkMode = JSON.parse(localStorage.getItem('darkMode'));
+  if (darkMode) {
+      document.body.classList.add('dark-mode');
+  }
+}
+
+function signIn() {
+  alert('Sign In functionality to be implemented');
 }

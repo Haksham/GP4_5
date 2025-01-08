@@ -149,3 +149,45 @@ button:hover, nav ul li a:hover {
       width: 100%;
   }
 }
+
+
+body.dark-mode {
+  background-color: #121212;
+  /* color: #ffffff; */
+}
+
+body.dark-mode header {
+  background-color: #333;
+  color: #ffffff;
+}
+
+body.dark-mode header h1 {
+  color: #ffffff;
+}
+
+body.dark-mode nav {
+  background-color: #555;
+  color: #ffffff;
+}
+
+body.dark-mode nav ul li a {
+  color: #ffffff;
+}
+
+body.dark-mode table, body.dark-mode th, body.dark-mode td {
+  border: 1px solid #555;
+}
+
+body.dark-mode button {
+  background-color: #555;
+  color: #ffffff;
+}
+
+body.dark-mode button:hover {
+  background-color: #777;
+}
+
+body.dark-mode footer {
+  background-color: #333;
+  color: #ffffff;
+}
