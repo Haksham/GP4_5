@@ -1,36 +1,67 @@
 document.addEventListener('DOMContentLoaded', () => {
   loadSampleBooks();
+  loadSampleMembers();
+  loadSampleTransactions();
+  loadBooks();
+  loadMembers();
+  loadTransactions();
 });
 
 function loadSampleBooks() {
   const books = [
-      { cover: 'images/book1.jpg', title: 'The Great Gatsby', author: 'F. Scott Fitzgerald', genre: 'Fiction' },
-      { cover: 'images/book2.jpg', title: 'To Kill a Mockingbird', author: 'Harper Lee', genre: 'Fiction' },
-      { cover: 'images/book3.jpg', title: '1984', author: 'George Orwell', genre: 'Dystopian' }
+      { cover: 'https://m.media-amazon.com/images/I/91GjOmU7z1L._AC_UF1000,1000_QL80_.jpg', title: 'The Great Gatsby', author: 'F. Scott Fitzgerald', genre: 'Fiction' },
+      { cover: 'https://m.media-amazon.com/images/M/MV5BZTlkYWU4MGEtZmQyYi00OWEzLTgzY2EtYzVjOTEzYzAyNTk1XkEyXkFqcGc@._V1_.jpg', title: 'To Kill a Mockingbird', author: 'Harper Lee', genre: 'Fiction' },
+      { cover: 'https://miro.medium.com/v2/resize:fit:800/1*g8s4n-puPV3y-F2b7ilJ_A.jpeg', title: '1984', author: 'George Orwell', genre: 'Dystopian' }
   ];
 
   books.forEach(book => addBookToTable(book));
 }
 
+function loadSampleMembers() {
+  const members = [
+      { name: 'John Doe', email: 'john@example.com', membershipDate: '2023-01-01' },
+      { name: 'Jane Smith', email: 'jane@example.com', membershipDate: '2023-02-01' },
+      { name: 'Alice Johnson', email: 'alice@example.com', membershipDate: '2023-03-01' }
+  ];
+
+  members.forEach(member => addMemberToTable(member));
+}
+
 function loadSampleTransactions() {
   const transactions = [
       { book: 'The Great Gatsby', member: 'John Doe', dateBorrowed: '2023-01-01', dateReturned: '2023-01-10' },
-      { book: 'To Kill a Mockingbird', member: 'Jane Smith', dateBorrowed: '2023-02-01', dateReturned: '2023-02-10' }
+      { book: 'To Kill a Mockingbird', member: 'Jane Smith', dateBorrowed: '2023-02-01', dateReturned: '2023-02-10' },
+      { book: '1984', member: 'Alice Johnson', dateBorrowed: '2023-03-01', dateReturned: '2023-03-10' }
   ];
 
   transactions.forEach(transaction => addTransactionToTable(transaction));
 }
 
-function addBook() {
-  const title = prompt('Enter book title:');
-  const author = prompt('Enter book author:');
-  const genre = prompt('Enter book genre:');
-  const cover = prompt('Enter book cover image URL:');
+function loadBooks() {
+  const books = JSON.parse(localStorage.getItem('books')) || [];
+  books.forEach(book => addBookToTable(book));
+}
 
-  if (title && author && genre && cover) {
-      const book = { cover, title, author, genre };
-      addBookToTable(book);
-  }
+function saveBooks(books) {
+  localStorage.setItem('books', JSON.stringify(books));
+}
+
+function loadMembers() {
+  const members = JSON.parse(localStorage.getItem('members')) || [];
+  members.forEach(member => addMemberToTable(member));
+}
+
+function saveMembers(members) {
+  localStorage.setItem('members', JSON.stringify(members));
+}
+
+function loadTransactions() {
+  const transactions = JSON.parse(localStorage.getItem('transactions')) || [];
+  transactions.forEach(transaction => addTransactionToTable(transaction));
+}
+
+function saveTransactions(transactions) {
+  localStorage.setItem('transactions', JSON.stringify(transactions));
 }
 
 function addBookToTable(book) {
@@ -38,12 +69,12 @@ function addBookToTable(book) {
   const row = document.createElement('tr');
 
   row.innerHTML = `
-      <td><img src="${book.cover}" alt="${book.title}" width="50"></td>
+      <td><img src="${book.cover}" alt="${book.title}" width="150"></td>
       <td>${book.title}</td>
       <td>${book.author}</td>
       <td>${book.genre}</td>
       <td>
-          <button onclick="editBook(this)">Edit</button>
+          <button onclick="redirectToEditBook(this)">Edit</button>
           <button onclick="deleteBook(this)">Delete</button>
       </td>
   `;
@@ -51,111 +82,104 @@ function addBookToTable(book) {
   table.appendChild(row);
 }
 
-function editBook(button) {
-  const row = button.parentElement.parentElement;
-  const title = prompt('Edit book title:', row.cells[1].innerText);
-  const author = prompt('Edit book author:', row.cells[2].innerText);
-  const genre = prompt('Edit book genre:', row.cells[3].innerText);
-  const cover = prompt('Edit book cover image URL:', row.cells[0].querySelector('img').src);
-
-  if (title && author && genre && cover) {
-      row.cells[0].querySelector('img').src = cover;
-      row.cells[0].querySelector('img').alt = title;
-      row.cells[1].innerText = title;
-      row.cells[2].innerText = author;
-      row.cells[3].innerText = genre;
+function updateBookInTable(updatedBook) {
+  const books = JSON.parse(localStorage.getItem('books')) || [];
+  const index = books.findIndex(book => book.title === updatedBook.title);
+  if (index !== -1) {
+      books[index] = updatedBook;
+      saveBooks(books);
+      const table = document.querySelector('#books tbody');
+      table.innerHTML = '';
+      books.forEach(book => addBookToTable(book));
   }
+}
+
+function redirectToEditBook(button) {
+  const row = button.parentElement.parentElement;
+  const book = {
+      title: row.cells[1].innerText,
+      author: row.cells[2].innerText,
+      genre: row.cells[3].innerText,
+      cover: row.cells[0].querySelector('img').src
+  };
+  localStorage.setItem('editBook', JSON.stringify(book));
+  window.location.href = 'edit-book.html';
 }
 
 function deleteBook(button) {
   const row = button.parentElement.parentElement;
+  const title = row.cells[1].innerText;
+  let books = JSON.parse(localStorage.getItem('books')) || [];
+  books = books.filter(book => book.title !== title);
+  saveBooks(books);
   row.remove();
 }
-
-function addTransaction() {
-  const book = prompt('Enter book title:');
-  const member = prompt('Enter member name:');
-  const dateBorrowed = prompt('Enter date borrowed (YYYY-MM-DD):');
-  const dateReturned = prompt('Enter date returned (YYYY-MM-DD):');
-
-  if (book && member && dateBorrowed && dateReturned) {
-      const lateFee = calculateLateFee(dateBorrowed, dateReturned);
-      showLateFeeWarning(lateFee);
-      const transaction = { book, member, dateBorrowed, dateReturned, lateFee };
-      addTransactionToTable(transaction);
-  }
-}
-
-function showLateFeeWarning(lateFee) {
-  const message = `They owe ${lateFee} fees`;
-  document.getElementById('late-fee-message').innerText = message;
-  document.getElementById('late-fee-popup').style.display = 'flex'; // Show popup
-}
-
-function closePopup() {
-  document.getElementById('late-fee-popup').style.display = 'none'; // Hide popup
-}
-
 
 function addTransactionToTable(transaction) {
   const table = document.querySelector('#transactions tbody');
   const row = document.createElement('tr');
 
-  row.innerHTML = 
-      `<td>${transaction.book}</td>
+  const dateBorrowed = new Date(transaction.dateBorrowed);
+  const dateReturned = new Date(transaction.dateReturned);
+  const lateFee = Math.max(0, Math.ceil((dateReturned - dateBorrowed) / (1000 * 60 * 60 * 24)) - 7) * 2;
+
+  const action = dateReturned ? 'Returned' : 'Issued';
+
+  row.innerHTML = `
+      <td>${transaction.book}</td>
       <td>${transaction.member}</td>
       <td>${transaction.dateBorrowed}</td>
       <td>${transaction.dateReturned}</td>
-      <td>${transaction.lateFee} Rupees</td> <!-- Added Late Fee -->
-      <td>
-          <button onclick="editTransaction(this)">Edit</button>
-          <button onclick="deleteTransaction(this)">Delete</button>
-      </td>`;
-  
-  table.appendChild(row);
-}
-function calculateLateFee(dateBorrowed, dateReturned) {
-  const borrowedDate = new Date(dateBorrowed);
-  const returnedDate = new Date(dateReturned);
-  
-  // Calculate difference in months
-  const diffTime = Math.abs(returnedDate - borrowedDate);
-  const diffMonths = Math.floor(diffTime / (1000 * 60 * 60 * 24 * 30)); // Approximate month difference
+      <td>${lateFee}</td>
+      <td>${action}</td>
+  `;
 
-  const lateFee = diffMonths * 5; // 5 rupees per month
-  return lateFee;
+  table.appendChild(row);
 }
 
 function editTransaction(button) {
-  const row = button.parentElement.parentElement;
-  const book = prompt('Edit book title:', row.cells[0].innerText);
-  const member = prompt('Edit member name:', row.cells[1].innerText);
-  const dateBorrowed = prompt('Edit date borrowed (YYYY-MM-DD):', row.cells[2].innerText);
-  const dateReturned = prompt('Edit date returned (YYYY-MM-DD):', row.cells[3].innerText);
-
-  if (book && member && dateBorrowed && dateReturned) {
-      // Recalculate the late fee
-      const lateFee = calculateLateFee(dateBorrowed, dateReturned);
-      showLateFeeWarning(lateFee); // Show warning popup if necessary
-
-      // Update the row with the new values
-      row.cells[0].innerText = book;
-      row.cells[1].innerText = member;
-      row.cells[2].innerText = dateBorrowed;
-      row.cells[3].innerText = dateReturned;
-      row.cells[4].innerText = `${lateFee} Rupees`; // Update late fee cell
-  }
+  redirectToEditTransaction();
 }
 
 function deleteTransaction(button) {
   const row = button.parentElement.parentElement;
+  const book = row.cells[0].innerText;
+  const member = row.cells[1].innerText;
+  let transactions = JSON.parse(localStorage.getItem('transactions')) || [];
+  transactions = transactions.filter(transaction => transaction.book !== book || transaction.member !== member);
+  saveTransactions(transactions);
   row.remove();
 }
 
-function addMember() {
-  alert('Add Member functionality to be implemented');
+function addMemberToTable(member) {
+  const table = document.querySelector('#members tbody');
+  const row = document.createElement('tr');
+
+  row.innerHTML = `
+      <td>${member.name}</td>
+      <td>${member.email}</td>
+      <td>${member.membershipDate}</td>
+      <td>
+          <button onclick="redirectToEditMember()">Edit</button>
+          <button onclick="deleteMember(this)">Delete</button>
+      </td>
+  `;
+
+  table.appendChild(row);
 }
 
+function editMember(button) {
+  redirectToEditMember();
+}
+
+function deleteMember(button) {
+  const row = button.parentElement.parentElement;
+  const email = row.cells[1].innerText;
+  let members = JSON.parse(localStorage.getItem('members')) || [];
+  members = members.filter(member => member.email !== email);
+  saveMembers(members);
+  row.remove();
+}
 
 function searchBooks() {
   const input = document.getElementById('searchBook');
@@ -173,48 +197,26 @@ function searchBooks() {
   }
 }
 
-function addMember() {
-  const name = prompt('Enter member name:');
-  const email = prompt('Enter member email:');
-  const membershipDate = prompt('Enter membership date (YYYY-MM-DD):');
-
-  if (name && email && membershipDate) {
-      const member = { name, email, membershipDate };
-      addMemberToTable(member);
-  }
+function redirectToAddBook() {
+  window.location.href = 'add-book.html';
 }
 
-function addMemberToTable(member) {
-  const table = document.querySelector('#members tbody');
-  const row = document.createElement('tr');
-
-  row.innerHTML = `
-      <td>${member.name}</td>
-      <td>${member.email}</td>
-      <td>${member.membershipDate}</td>
-      <td>
-          <button onclick="editMember(this)">Edit</button>
-          <button onclick="deleteMember(this)">Delete</button>
-      </td>
-  `;
-
-  table.appendChild(row);
+function redirectToEditBook() {
+  window.location.href = 'edit-book.html';
 }
 
-function editMember(button) {
-  const row = button.parentElement.parentElement;
-  const name = prompt('Edit member name:', row.cells[0].innerText);
-  const email = prompt('Edit member email:', row.cells[1].innerText);
-  const membershipDate = prompt('Edit membership date (YYYY-MM-DD):', row.cells[2].innerText);
-
-  if (name && email && membershipDate) {
-      row.cells[0].innerText = name;
-      row.cells[1].innerText = email;
-      row.cells[2].innerText = membershipDate;
-  }
+function redirectToAddMember() {
+  window.location.href = 'add-member.html';
 }
 
-function deleteMember(button) {
-  const row = button.parentElement.parentElement;
-  row.remove();
+function redirectToEditMember() {
+  window.location.href = 'edit-member.html';
+}
+
+function redirectToAddTransaction() {
+  window.location.href = 'add-transaction.html';
+}
+
+function redirectToEditTransaction() {
+  window.location.href = 'edit-transaction.html';
 }
