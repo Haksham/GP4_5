@@ -79,27 +79,51 @@ function addTransaction() {
   const dateReturned = prompt('Enter date returned (YYYY-MM-DD):');
 
   if (book && member && dateBorrowed && dateReturned) {
-      const transaction = { book, member, dateBorrowed, dateReturned };
+      const lateFee = calculateLateFee(dateBorrowed, dateReturned);
+      showLateFeeWarning(lateFee);
+      const transaction = { book, member, dateBorrowed, dateReturned, lateFee };
       addTransactionToTable(transaction);
   }
 }
+
+function showLateFeeWarning(lateFee) {
+  const message = `They owe ${lateFee} fees`;
+  document.getElementById('late-fee-message').innerText = message;
+  document.getElementById('late-fee-popup').style.display = 'flex'; // Show popup
+}
+
+function closePopup() {
+  document.getElementById('late-fee-popup').style.display = 'none'; // Hide popup
+}
+
 
 function addTransactionToTable(transaction) {
   const table = document.querySelector('#transactions tbody');
   const row = document.createElement('tr');
 
-  row.innerHTML = `
-      <td>${transaction.book}</td>
+  row.innerHTML = 
+      `<td>${transaction.book}</td>
       <td>${transaction.member}</td>
       <td>${transaction.dateBorrowed}</td>
       <td>${transaction.dateReturned}</td>
+      <td>${transaction.lateFee} Rupees</td> <!-- Added Late Fee -->
       <td>
           <button onclick="editTransaction(this)">Edit</button>
           <button onclick="deleteTransaction(this)">Delete</button>
-      </td>
-  `;
-
+      </td>`;
+  
   table.appendChild(row);
+}
+function calculateLateFee(dateBorrowed, dateReturned) {
+  const borrowedDate = new Date(dateBorrowed);
+  const returnedDate = new Date(dateReturned);
+  
+  // Calculate difference in months
+  const diffTime = Math.abs(returnedDate - borrowedDate);
+  const diffMonths = Math.floor(diffTime / (1000 * 60 * 60 * 24 * 30)); // Approximate month difference
+
+  const lateFee = diffMonths * 5; // 5 rupees per month
+  return lateFee;
 }
 
 function editTransaction(button) {
@@ -110,10 +134,16 @@ function editTransaction(button) {
   const dateReturned = prompt('Edit date returned (YYYY-MM-DD):', row.cells[3].innerText);
 
   if (book && member && dateBorrowed && dateReturned) {
+      // Recalculate the late fee
+      const lateFee = calculateLateFee(dateBorrowed, dateReturned);
+      showLateFeeWarning(lateFee); // Show warning popup if necessary
+
+      // Update the row with the new values
       row.cells[0].innerText = book;
       row.cells[1].innerText = member;
       row.cells[2].innerText = dateBorrowed;
       row.cells[3].innerText = dateReturned;
+      row.cells[4].innerText = `${lateFee} Rupees`; // Update late fee cell
   }
 }
 
