@@ -126,8 +126,6 @@ function calculateLateFee(dateBorrowed, dateReturned) {
   return lateFee;
 }
 
-
-
 function editTransaction(button) {
   const row = button.parentElement.parentElement;
   const book = prompt('Edit book title:', row.cells[0].innerText);
@@ -136,10 +134,16 @@ function editTransaction(button) {
   const dateReturned = prompt('Edit date returned (YYYY-MM-DD):', row.cells[3].innerText);
 
   if (book && member && dateBorrowed && dateReturned) {
+      // Recalculate the late fee
+      const lateFee = calculateLateFee(dateBorrowed, dateReturned);
+      showLateFeeWarning(lateFee); // Show warning popup if necessary
+
+      // Update the row with the new values
       row.cells[0].innerText = book;
       row.cells[1].innerText = member;
       row.cells[2].innerText = dateBorrowed;
       row.cells[3].innerText = dateReturned;
+      row.cells[4].innerText = `${lateFee} Rupees`; // Update late fee cell
   }
 }
 
