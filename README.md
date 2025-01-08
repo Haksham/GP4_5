@@ -2,6 +2,9 @@
 Group project for GitHub class.<br>
 Implement a library management system.<br>
 
+## Project Structure
+
+```plaintext
 Directory structure:
 └── Haksham-GP6_5/
     ├── README.md
@@ -18,10 +21,10 @@ Directory structure:
         └── ISSUE_TEMPLATE/
             ├── bug_report.md
             └── custom.md
-
-Contributers:
+```
+## Contributers:
 <kbd>Member 1:</kbd>[Harshvardhan Mehta](https://github.com/Haksham)
-<kbd>Member 2:</kbd>
-<kbd>Member 3:</kbd>
-<kbd>Member 4:</kbd>
-<kbd>Member 5:</kbd>
+<kbd>Member 2:</kbd>[]()
+<kbd>Member 3:</kbd>[]()
+<kbd>Member 4:</kbd>[]()
+<kbd>Member 5:</kbd>[]()
