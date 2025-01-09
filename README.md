@@ -2,26 +2,26 @@
 
 This repository houses the code for an integrated library management system developed as a group project for our GitHub class.<br>
 The system aims to streamline library operations, providing a user-friendly interface for both librarians and patrons.<br>
-<h1 align="center" style="font-size:3em"><img src="pics/main.PNG" height="550px"/></h1>
+<h1 align="center" style="font-size:3em"><img src="pics/main.PNG" height="500px"/></h1>
 
 ## Features
 ### 1. User Interface:
 * **Dark Mode**: Supports a visually appealing dark mode for comfortable nighttime use.<br>
 * **Responsive Design**: Adapts seamlessly to various screen sizes, ensuring optimal viewing on desktops, laptops, tablets, and smartphones.<br>
-<h1 align="center" style="font-size:3em"><img src="pics/dark.PNG" height="550px"/></h1>
+<h1 align="center" style="font-size:3em"><img src="pics/dark.PNG" height="500px"/></h1>
 
 ### 2. Core Functionality:
 * **User Authentication**: Secure user login and registration system.<br>
 ### 3. Member Management:
 * Add new members to the library.<br>
 * Edit existing member details (e.g., contact information, membership status).<br>
-<h1 align="center" style="font-size:3em"><img src="pics/members.PNG" height="550px"/></h1>
+<h1 align="center" style="font-size:3em"><img src="pics/members.PNG" height="400px"/></h1>
 
 ### 4. Transaction Management:
 * Record book checkouts, returns, and renewals.<br>
 * Track fines and overdue notices.<br>
 * Edit transaction records as needed.<br>
-<h1 align="center" style="font-size:3em"><img src="pics/transcations.PNG" height="550px"/></h1>
+<h1 align="center" style="font-size:3em"><img src="pics/transcations.PNG" height="400px"/></h1>
 
 ### 5. Book Management:
 * Add new books to the library catalog, <br>**Including**:<br>
