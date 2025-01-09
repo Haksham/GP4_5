@@ -23,7 +23,7 @@
         <section id="books">
             <h2>Books</h2>
             <input type="text" id="searchBook" placeholder="Search for books..." onkeyup="searchBooks()">
-            <button onclick="redirectToAddBook()">Add Book</button>
+            <button onclick="addBook()">Add Book</button>
             <table>
                 <thead>
                     <tr>
@@ -41,7 +41,7 @@
         </section>
         <section id="members">
             <h2>Members</h2>
-            <button onclick="redirectToAddMember()">Add Member</button>
+            <button onclick="addMember()">Add Member</button>
             <table>
                 <thead>
                     <tr>
@@ -58,7 +58,7 @@
         </section>
         <section id="transactions">
             <h2>Transactions</h2>
-            <button onclick="redirectToAddTransaction()">Add Transaction</button>
+            <button onclick="addTransaction()">Add Transaction</button>
             <table>
                 <thead>
                     <tr>
@@ -67,6 +67,7 @@
                         <th>Date Borrowed</th>
                         <th>Date Returned</th>
                         <th>Late Fee</th>
+                        <th>Process</th>
                         <th>Actions</th>
                     </tr>
                 </thead>

@@ -75,7 +75,7 @@ function addBookToTable(book) {
       <td>${book.author}</td>
       <td>${book.genre}</td>
       <td>
-          <button onclick="redirectToEditBook(this)">Edit</button>
+          <button onclick="editBook(this)">Edit</button>
           <button onclick="deleteBook(this)">Delete</button>
       </td>
   `;
@@ -95,16 +95,37 @@ function updateBookInTable(updatedBook) {
   }
 }
 
-function redirectToEditBook(button) {
+function addBook() {
+  const title = prompt('Enter book title:');
+  const author = prompt('Enter book author:');
+  const genre = prompt('Enter book genre:');
+  const cover = prompt('Enter book cover image URL:');
+
+  if (title && author && genre && cover) {
+      const book = { title, author, genre, cover };
+      const books = JSON.parse(localStorage.getItem('books')) || [];
+      books.push(book);
+      saveBooks(books);
+      addBookToTable(book);
+  }
+}
+
+function editBook(button) {
   const row = button.parentElement.parentElement;
-  const book = {
-      title: row.cells[1].innerText,
-      author: row.cells[2].innerText,
-      genre: row.cells[3].innerText,
-      cover: row.cells[0].querySelector('img').src
-  };
-  localStorage.setItem('editBook', JSON.stringify(book));
-  window.location.href = 'edit-book.html';
+  const title = row.cells[1].innerText;
+  const author = row.cells[2].innerText;
+  const genre = row.cells[3].innerText;
+  const cover = row.cells[0].querySelector('img').src;
+
+  const newTitle = prompt('Edit book title:', title);
+  const newAuthor = prompt('Edit book author:', author);
+  const newGenre = prompt('Edit book genre:', genre);
+  const newCover = prompt('Edit book cover image URL:', cover);
+
+  if (newTitle && newAuthor && newGenre && newCover) {
+      const updatedBook = { title: newTitle, author: newAuthor, genre: newGenre, cover: newCover };
+      updateBookInTable(updatedBook);
+  }
 }
 
 function deleteBook(button) {
@@ -133,13 +154,54 @@ function addTransactionToTable(transaction) {
       <td>${transaction.dateReturned}</td>
       <td>${lateFee}</td>
       <td>${action}</td>
+      <td>
+          <button onclick="editTransaction(this)">Edit</button>
+          <button onclick="deleteTransaction(this)">Delete</button>
+      </td>
   `;
 
   table.appendChild(row);
 }
 
+function addTransaction() {
+  const book = prompt('Enter book title:');
+  const member = prompt('Enter member name:');
+  const dateBorrowed = prompt('Enter date borrowed (YYYY-MM-DD):');
+  const dateReturned = prompt('Enter date returned (YYYY-MM-DD):');
+
+  if (book && member && dateBorrowed && dateReturned) {
+      const transaction = { book, member, dateBorrowed, dateReturned };
+      const transactions = JSON.parse(localStorage.getItem('transactions')) || [];
+      transactions.push(transaction);
+      saveTransactions(transactions);
+      addTransactionToTable(transaction);
+  }
+}
+
 function editTransaction(button) {
-  redirectToEditTransaction();
+  const row = button.parentElement.parentElement;
+  const book = row.cells[0].innerText;
+  const member = row.cells[1].innerText;
+  const dateBorrowed = row.cells[2].innerText;
+  const dateReturned = row.cells[3].innerText;
+
+  const newBook = prompt('Edit book title:', book);
+  const newMember = prompt('Edit member name:', member);
+  const newDateBorrowed = prompt('Edit date borrowed (YYYY-MM-DD):', dateBorrowed);
+  const newDateReturned = prompt('Edit date returned (YYYY-MM-DD):', dateReturned);
+
+  if (newBook && newMember && newDateBorrowed && newDateReturned) {
+      const updatedTransaction = { book: newBook, member: newMember, dateBorrowed: newDateBorrowed, dateReturned: newDateReturned };
+      const transactions = JSON.parse(localStorage.getItem('transactions')) || [];
+      const index = transactions.findIndex(transaction => transaction.book === book && transaction.member === member);
+      if (index !== -1) {
+          transactions[index] = updatedTransaction;
+          saveTransactions(transactions);
+          const table = document.querySelector('#transactions tbody');
+          table.innerHTML = '';
+          transactions.forEach(transaction => addTransactionToTable(transaction));
+      }
+  }
 }
 
 function deleteTransaction(button) {
@@ -152,25 +214,42 @@ function deleteTransaction(button) {
   row.remove();
 }
 
-function addMemberToTable(member) {
-  const table = document.querySelector('#members tbody');
-  const row = document.createElement('tr');
+function addMember() {
+  const name = prompt('Enter member name:');
+  const email = prompt('Enter member email:');
+  const membershipDate = prompt('Enter membership date (YYYY-MM-DD):');
 
-  row.innerHTML = `
-      <td>${member.name}</td>
-      <td>${member.email}</td>
-      <td>${member.membershipDate}</td>
-      <td>
-          <button onclick="redirectToEditMember()">Edit</button>
-          <button onclick="deleteMember(this)">Delete</button>
-      </td>
-  `;
-
-  table.appendChild(row);
+  if (name && email && membershipDate) {
+      const member = { name, email, membershipDate };
+      const members = JSON.parse(localStorage.getItem('members')) || [];
+      members.push(member);
+      saveMembers(members);
+      addMemberToTable(member);
+  }
 }
 
 function editMember(button) {
-  redirectToEditMember();
+  const row = button.parentElement.parentElement;
+  const name = row.cells[0].innerText;
+  const email = row.cells[1].innerText;
+  const membershipDate = row.cells[2].innerText;
+
+  const newName = prompt('Edit member name:', name);
+  const newEmail = prompt('Edit member email:', email);
+  const newMembershipDate = prompt('Edit membership date (YYYY-MM-DD):', membershipDate);
+
+  if (newName && newEmail && newMembershipDate) {
+      const updatedMember = { name: newName, email: newEmail, membershipDate: newMembershipDate };
+      const members = JSON.parse(localStorage.getItem('members')) || [];
+      const index = members.findIndex(member => member.email === email);
+      if (index !== -1) {
+          members[index] = updatedMember;
+          saveMembers(members);
+          const table = document.querySelector('#members tbody');
+          table.innerHTML = '';
+          members.forEach(member => addMemberToTable(member));
+      }
+  }
 }
 
 function deleteMember(button) {
@@ -180,6 +259,23 @@ function deleteMember(button) {
   members = members.filter(member => member.email !== email);
   saveMembers(members);
   row.remove();
+}
+
+function addMemberToTable(member) {
+  const table = document.querySelector('#members tbody');
+  const row = document.createElement('tr');
+
+  row.innerHTML = `
+      <td>${member.name}</td>
+      <td>${member.email}</td>
+      <td>${member.membershipDate}</td>
+      <td>
+          <button onclick="editMember(this)">Edit</button>
+          <button onclick="deleteMember(this)">Delete</button>
+      </td>
+  `;
+
+  table.appendChild(row);
 }
 
 function searchBooks() {
@@ -196,30 +292,6 @@ function searchBooks() {
           rows[i].style.display = 'none';
       }
   }
-}
-
-function redirectToAddBook() {
-  window.location.href = 'add-book.html';
-}
-
-function redirectToEditBook() {
-  window.location.href = 'edit-book.html';
-}
-
-function redirectToAddMember() {
-  window.location.href = 'add-member.html';
-}
-
-function redirectToEditMember() {
-  window.location.href = 'edit-member.html';
-}
-
-function redirectToAddTransaction() {
-  window.location.href = 'add-transaction.html';
-}
-
-function redirectToEditTransaction() {
-  window.location.href = 'edit-transaction.html';
 }
 
 function toggleDarkMode() {
