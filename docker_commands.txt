@@ -49,3 +49,4 @@ Other Command:
 5. "docker rmi <image_name>" remove a docker image.
 
 6. "docker pull <your_username>/<repo_name>:<tag>" pull a docker image.
+-- tag can be "latest"
