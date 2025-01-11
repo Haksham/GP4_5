@@ -1,0 +1,51 @@
+1. Install Docker Desktop.
+
+2. Create account on DockerHub.
+
+3. Connect Docker Desktop with DockerHub account.
+
+4. Install Docker extension on VSCode.
+
+5. Connect VSCode Docker extension with Docker account.
+
+Now Command:
+
+1. Goto and open the file you want to Dockerize in VSCode.
+
+2. Create "DockerFile, docker-compose.yml, .dockerignore" files on the selected folder and either write them manually or use github-copilot to create them.
+
+3. Run "docker --version" to check the version.
+
+4. "docker build -t Project_name ." create a docker file.
+
+5. "docker images" check if docker img generated.
+
+6. "docker login" check if login is successfull.
+
+7. "docker tag Project_name your_username/Repo_name:latest" to tag the project with specified repo on your account.
+
+8. "docker push your_username/Repo_name:latest" to push on your DockerHub.
+
+9. Run "docker run -p 80:80 proj_name" and goto "http://localhost:80" to check if its running.
+
+80:80 for static , 3000:3000 for nextjs default.
+
+Note: Make sure Docker Desktop is running and you are logged-in in the (VSCode-extension,DockerHUB,Docker-Desktop) while doing all these things.
+
+Other Command:
+
+1. "docker ps" or "docker ps -a" to check running containers.
+
+2. "docker run -p <host_port>:<container_port> <image_name>" to run a container.
+
+  or "docker run <Image id>" to run an particular image.
+
+  "Ctrl+c" to stop process.
+
+3. "docker stop <container_id>" stop a running container.
+
+4. "docker rm <container_id>" remove a docker container.
+
+5. "docker rmi <image_name>" remove a docker image.
+
+6. "docker pull <your_username>/<repo_name>:<tag>" pull a docker image.
