@@ -10,17 +10,17 @@
 
 Now Command:
 
-1. Goto and open the file you want to Dockerize in VSCode.
+1. Run "docker --version" to check the version.
 
-2. Create "DockerFile, docker-compose.yml, .dockerignore" files on the selected folder and either write them manually or use github-copilot to create them.
+2. "docker login" check if login is successfull.
 
-3. Run "docker --version" to check the version.
+3. Goto and open the file you want to Dockerize in VSCode.
 
-4. "docker build -t Project_name ." create a docker file.
+4. "docker images" check if docker img generated.
 
-5. "docker images" check if docker img generated.
+5. Create "DockerFile, docker-compose.yml, .dockerignore" files on the selected folder and either write them manually or use github-copilot to create them.
 
-6. "docker login" check if login is successfull.
+6. "docker build -t Project_name ." create a docker file.
 
 7. "docker tag Project_name your_username/Repo_name:latest" to tag the project with specified repo on your account.
 
@@ -45,8 +45,12 @@ Other Command:
 3. "docker stop <container_id>" stop a running container.
 
 4. "docker rm <container_id>" remove a docker container.
+   "docker rm <container_id> --force" to force remove a container.
 
 5. "docker rmi <image_name>" remove a docker image.
+   "docker rmi <image_name> --force" to remove a image forcefully.
 
 6. "docker pull <your_username>/<repo_name>:<tag>" pull a docker image.
 -- tag can be "latest"
+
+7. "docker build --no-cache -t <image_name> ." to rebuild a docker image.
