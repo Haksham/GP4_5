@@ -102,15 +102,19 @@ The system aims to streamline library operations, providing a user-friendly inte
 ## Project Structure
 ```plaintext
 Directory structure:
-└── Haksham-GP6_5/
+└── haksham-gp6_5/
     ├── README.md
     ├── CODE_OF_CONDUCT.md
     ├── CONTRIBUTING.md
+    ├── Dockerfile
     ├── LICENSE
     ├── SECURITY.md
+    ├── docker-compose.yml
+    ├── docker_commands.txt
     ├── index.html
     ├── scripts.js
     ├── styles.css
+    ├── .dockerignore
     ├── pics/
     │   ├── coderunner.PNG
     │   ├── dark.PNG
