@@ -1,0 +1,31 @@
+docker run hello-world
+docker images
+
+docker run -it ubuntu bash
+ls
+docker version
+docker exec -it "id"
+docker run -it ubuntu bash
+exit
+docker ps
+docker ps -a
+docker run -idt ubuntu bash
+docker ps
+exit
+
+docker commit
+
+
+
+server 
+microservices
+server load distribution by api call
+scalablity
+load balancing nginex
+dockerize services
+caching using reddis then docarize
+changing arch to microservices 
+replica sets and shards in mongodb
+
+
+
