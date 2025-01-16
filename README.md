@@ -92,18 +92,29 @@ The system aims to streamline library operations, providing a user-friendly inte
     - The deployed website will be available at the following URL:
 
           https://<your_username>.github.io/<repository_name>
+
+      ###                     Or
+
+## Get the Docker file: [DockerFile](https://hub.docker.com/r/haksham/libms)
+## Hosted: [GitHub Pages](https://haksham.github.io/GP6_5/)
+
+
 ## Project Structure
 ```plaintext
 Directory structure:
-└── Haksham-GP6_5/
+└── haksham-gp6_5/
     ├── README.md
     ├── CODE_OF_CONDUCT.md
     ├── CONTRIBUTING.md
+    ├── Dockerfile
     ├── LICENSE
     ├── SECURITY.md
+    ├── docker-compose.yml
+    ├── docker_commands.txt
     ├── index.html
     ├── scripts.js
     ├── styles.css
+    ├── .dockerignore
     ├── pics/
     │   ├── coderunner.PNG
     │   ├── dark.PNG
